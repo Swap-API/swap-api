@@ -1,0 +1,24 @@
+# swapapi.xyz — Free Token Swap API
+
+> Token swap calldata as a single GET request. No auth, no SDK. 46 chains.
+
+## Full LLM Reference
+
+The complete and up-to-date reference — all chain IDs, token addresses, response format, error codes, and execution walkthrough — is at:
+
+https://swapapi.xyz/llms.txt
+
+Fetch that URL for the authoritative content. The version in this repo is intentionally minimal to avoid going stale.
+
+## Quick Links
+
+- API: https://api.swapapi.xyz (fallback: https://api-production-b91c.up.railway.app)
+- OpenAPI spec: https://api.swapapi.xyz/openapi.json
+- Docs (Swagger UI): https://api.swapapi.xyz/docs
+- Site: https://swapapi.xyz
+
+## Files in this repo
+
+- [CLAUDE.md](CLAUDE.md): Agent quick-start — endpoint, approval flow, simulation, tests
+- [openapi.json](openapi.json): OpenAPI 3.1.0 machine-readable schema
+- [README.md](README.md): Human-readable usage guide

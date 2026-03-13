@@ -1,0 +1,444 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Swap API",
+    "version": "0.1.0",
+    "description": "Type-safe swap API with structured responses and OpenAPI documentation. Visit /v1/swap/examples for code samples in curl, TypeScript, Python, and Rust."
+  },
+  "components": {
+    "schemas": {
+      "SwapSuccessResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "enum": [
+              true
+            ]
+          },
+          "data": {
+            "$ref": "#/components/schemas/SwapResponseData"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "success",
+          "data",
+          "timestamp"
+        ]
+      },
+      "SwapResponseData": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "Successful",
+              "Partial",
+              "NoRoute"
+            ],
+            "description": "Successful = full route with tx, Partial = partial fill, NoRoute = no route found"
+          },
+          "tokenFrom": {
+            "type": "object",
+            "properties": {
+              "address": {
+                "type": "string",
+                "description": "Token contract address"
+              },
+              "symbol": {
+                "type": "string",
+                "description": "Token ticker symbol (e.g., ETH, USDC)"
+              },
+              "name": {
+                "type": "string",
+                "description": "Full token name"
+              },
+              "decimals": {
+                "type": "number",
+                "description": "Token decimal places (e.g., 18 for ETH, 6 for USDC)"
+              }
+            },
+            "required": [
+              "address",
+              "symbol",
+              "name",
+              "decimals"
+            ],
+            "description": "Input token metadata"
+          },
+          "tokenTo": {
+            "type": "object",
+            "properties": {
+              "address": {
+                "type": "string",
+                "description": "Token contract address"
+              },
+              "symbol": {
+                "type": "string",
+                "description": "Token ticker symbol (e.g., ETH, USDC)"
+              },
+              "name": {
+                "type": "string",
+                "description": "Full token name"
+              },
+              "decimals": {
+                "type": "number",
+                "description": "Token decimal places (e.g., 18 for ETH, 6 for USDC)"
+              }
+            },
+            "required": [
+              "address",
+              "symbol",
+              "name",
+              "decimals"
+            ],
+            "description": "Output token metadata"
+          },
+          "swapPrice": {
+            "type": "number",
+            "description": "Exchange rate: 1 tokenIn = swapPrice tokenOut"
+          },
+          "priceImpact": {
+            "type": "number",
+            "description": "Price impact as decimal (0.0012 = 0.12%)"
+          },
+          "amountIn": {
+            "type": "string",
+            "description": "Input amount in smallest unit"
+          },
+          "expectedAmountOut": {
+            "type": "string",
+            "description": "Expected output amount in smallest unit of tokenOut (best case)"
+          },
+          "minAmountOut": {
+            "type": "string",
+            "description": "Minimum output amount after maxSlippage (= expectedAmountOut × (1 − maxSlippage)). Transaction reverts if actual output is below this."
+          },
+          "tokens": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "address": {
+                  "type": "string",
+                  "description": "Token contract address"
+                },
+                "symbol": {
+                  "type": "string",
+                  "description": "Token ticker symbol (e.g., ETH, USDC)"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Full token name"
+                },
+                "decimals": {
+                  "type": "number",
+                  "description": "Token decimal places (e.g., 18 for ETH, 6 for USDC)"
+                }
+              },
+              "required": [
+                "address",
+                "symbol",
+                "name",
+                "decimals"
+              ]
+            },
+            "description": "All tokens in the swap route, including intermediaries"
+          },
+          "tx": {
+            "type": "object",
+            "properties": {
+              "from": {
+                "type": "string",
+                "description": "Sender address (same as input sender)"
+              },
+              "to": {
+                "type": "string",
+                "description": "DEX router contract to call"
+              },
+              "data": {
+                "type": "string",
+                "description": "ABI-encoded swap calldata"
+              },
+              "value": {
+                "type": "string",
+                "description": "Native token amount in wei (for native→token swaps)"
+              },
+              "gasPrice": {
+                "type": "number",
+                "description": "Suggested gas price"
+              },
+              "gas": {
+                "type": "string",
+                "description": "Estimated gas limit"
+              }
+            },
+            "required": [
+              "from",
+              "to",
+              "data"
+            ],
+            "description": "Ready-to-sign transaction object (present when status is Successful)"
+          },
+          "rpcUrl": {
+            "type": "string",
+            "format": "uri",
+            "description": "Recommended public RPC endpoint for this chain, sourced from Chainlist and refreshed hourly. Use your own RPC if preferred."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "additionalProperties": {
+          "nullable": true
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "enum": [
+              false
+            ]
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "details": {
+                "type": "object",
+                "additionalProperties": {
+                  "nullable": true
+                }
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ]
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "success",
+          "error",
+          "timestamp"
+        ]
+      },
+      "TokenIn": {
+        "type": "string",
+        "pattern": "^0x[a-fA-F0-9]{40}$",
+        "description": "Input token contract address. Use 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE for native gas token",
+        "example": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
+      },
+      "TokenOut": {
+        "type": "string",
+        "pattern": "^0x[a-fA-F0-9]{40}$",
+        "description": "Output token contract address",
+        "example": "0x6B3595068778DD592e39A122f4f5a5cF09C90fE2"
+      },
+      "Amount": {
+        "type": "string",
+        "pattern": "^\\d+$",
+        "description": "Amount of tokenIn in smallest unit (e.g., 1 ETH = 1000000000000000000, 100 USDC = 100000000)",
+        "example": "1000000000000000000"
+      },
+      "MaxSlippage": {
+        "type": "number",
+        "nullable": true,
+        "minimum": 0,
+        "maximum": 1,
+        "default": 0.005,
+        "description": "Maximum slippage tolerance as decimal 0-1 (0.005 = 0.5%)",
+        "example": 0.005
+      },
+      "Sender": {
+        "type": "string",
+        "pattern": "^0x[a-fA-F0-9]{40}$",
+        "description": "Wallet address that will sign and send the transaction",
+        "example": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+      },
+      "ChainId": {
+        "type": "integer",
+        "minimum": 0,
+        "exclusiveMinimum": true,
+        "description": "Blockchain network ID (e.g., 1 for Ethereum, 8453 for Base)",
+        "example": 1
+      }
+    },
+    "parameters": {}
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Health check",
+        "responses": {
+          "200": {
+            "description": "Service is healthy",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "ok"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "status"
+                      ]
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data",
+                    "timestamp"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/swap/{chainId}": {
+      "get": {
+        "tags": [
+          "Swap"
+        ],
+        "summary": "Get swap quote and transaction data",
+        "description": "Returns a swap quote including price, price impact, and transaction data ready for execution.",
+        "parameters": [
+          {
+            "schema": {
+              "$ref": "#/components/schemas/ChainId"
+            },
+            "required": true,
+            "description": "Blockchain network ID (e.g., 1 for Ethereum, 8453 for Base)",
+            "name": "chainId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "$ref": "#/components/schemas/TokenIn"
+            },
+            "required": true,
+            "description": "Input token contract address. Use 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE for native gas token",
+            "name": "tokenIn",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "$ref": "#/components/schemas/TokenOut"
+            },
+            "required": true,
+            "description": "Output token contract address",
+            "name": "tokenOut",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "$ref": "#/components/schemas/Amount"
+            },
+            "required": true,
+            "description": "Amount of tokenIn in smallest unit (e.g., 1 ETH = 1000000000000000000, 100 USDC = 100000000)",
+            "name": "amount",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "$ref": "#/components/schemas/MaxSlippage"
+            },
+            "required": false,
+            "description": "Maximum slippage tolerance as decimal 0-1 (0.005 = 0.5%)",
+            "name": "maxSlippage",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "$ref": "#/components/schemas/Sender"
+            },
+            "required": true,
+            "description": "Wallet address that will sign and send the transaction",
+            "name": "sender",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Swap quote retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SwapSuccessResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters or unsupported chain",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Upstream API error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
