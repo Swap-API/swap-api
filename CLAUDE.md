@@ -9,7 +9,7 @@ GET {base}/v1/swap/{chainId}?tokenIn={address}&tokenOut={address}&amount={wei}&s
 ```
 
 **Base URLs**
-- Primary: `https://api.swapapi.xyz`
+- Primary: `https://api.swapapi.dev`
 - Fallback: `https://api-production-b91c.up.railway.app`
 
 `maxSlippage` is optional (default `0.005` = 0.5%). All other params are required.
@@ -22,7 +22,7 @@ GET {base}/v1/swap/{chainId}?tokenIn={address}&tokenOut={address}&amount={wei}&s
 
 ```bash
 # Swap 1 ETH → USDC on Base (chain 8453)
-curl "https://api.swapapi.xyz/v1/swap/8453?tokenIn=0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE&tokenOut=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&amount=1000000000000000000&sender=0xYourAddress"
+curl "https://api.swapapi.dev/v1/swap/8453?tokenIn=0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE&tokenOut=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&amount=1000000000000000000&sender=0xYourAddress"
 ```
 
 See [`llms.txt`](llms.txt) for all 46 chain IDs and token addresses.
@@ -143,7 +143,7 @@ Use these to validate a swap integration. Each covers a distinct scenario.
 
 ```bash
 # 0.001 ETH → USDC on Base
-curl "https://api.swapapi.xyz/v1/swap/8453?tokenIn=0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE&tokenOut=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&amount=1000000000000000&sender=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+curl "https://api.swapapi.dev/v1/swap/8453?tokenIn=0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE&tokenOut=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&amount=1000000000000000&sender=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
 ```
 
 Expect: `success: true`, `data.status: "Successful"`, `data.tx.value: "1000000000000000"`, `data.tx.data` starts with `0x`
@@ -152,7 +152,7 @@ Expect: `success: true`, `data.status: "Successful"`, `data.tx.value: "100000000
 
 ```bash
 # 10 USDC → ETH on Arbitrum
-curl "https://api.swapapi.xyz/v1/swap/42161?tokenIn=0xaf88d065e77c8cC2239327C5EDb3A432268e5831&tokenOut=0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE&amount=10000000&sender=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+curl "https://api.swapapi.dev/v1/swap/42161?tokenIn=0xaf88d065e77c8cC2239327C5EDb3A432268e5831&tokenOut=0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE&amount=10000000&sender=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
 ```
 
 Expect: `success: true`, `data.tx.value: "0"` (ERC-20 input means no ETH sent), `data.tx.to` is the router address to approve
@@ -161,7 +161,7 @@ Expect: `success: true`, `data.tx.value: "0"` (ERC-20 input means no ETH sent), 
 
 ```bash
 # 100 USDC → DAI on Ethereum
-curl "https://api.swapapi.xyz/v1/swap/1?tokenIn=0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48&tokenOut=0x6B175474E89094C44Da98b954EedeAC495271d0F&amount=100000000&sender=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+curl "https://api.swapapi.dev/v1/swap/1?tokenIn=0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48&tokenOut=0x6B175474E89094C44Da98b954EedeAC495271d0F&amount=100000000&sender=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
 ```
 
 Expect: `success: true`, `data.tx.value: "0"`, `priceImpact` near 0 (liquid pair), `expectedAmountOut` ≈ `100000000000000000000` (100 DAI)
@@ -170,7 +170,7 @@ Expect: `success: true`, `data.tx.value: "0"`, `priceImpact` near 0 (liquid pair
 
 ```bash
 # 1 ETH → USDC on Polygon with 1% slippage
-curl "https://api.swapapi.xyz/v1/swap/137?tokenIn=0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE&tokenOut=0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359&amount=1000000000000000000&sender=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045&maxSlippage=0.01"
+curl "https://api.swapapi.dev/v1/swap/137?tokenIn=0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE&tokenOut=0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359&amount=1000000000000000000&sender=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045&maxSlippage=0.01"
 ```
 
 Expect: `minAmountOut` ≈ `expectedAmountOut * 0.99`
@@ -179,7 +179,7 @@ Expect: `minAmountOut` ≈ `expectedAmountOut * 0.99`
 
 ```bash
 # Missing sender param
-curl "https://api.swapapi.xyz/v1/swap/1?tokenIn=0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE&tokenOut=0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48&amount=1000000000000000000"
+curl "https://api.swapapi.dev/v1/swap/1?tokenIn=0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE&tokenOut=0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48&amount=1000000000000000000"
 ```
 
 Expect: `success: false`, `error.code: "INVALID_PARAMS"`, HTTP 400
@@ -187,7 +187,7 @@ Expect: `success: false`, `error.code: "INVALID_PARAMS"`, HTTP 400
 ### Test 6: Unsupported chain → 400
 
 ```bash
-curl "https://api.swapapi.xyz/v1/swap/99999?tokenIn=0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE&tokenOut=0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48&amount=1000000000000000000&sender=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+curl "https://api.swapapi.dev/v1/swap/99999?tokenIn=0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE&tokenOut=0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48&amount=1000000000000000000&sender=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
 ```
 
 Expect: `success: false`, `error.code: "UNSUPPORTED_CHAIN"`, HTTP 400
@@ -195,7 +195,7 @@ Expect: `success: false`, `error.code: "UNSUPPORTED_CHAIN"`, HTTP 400
 ### Test 7: Health check
 
 ```bash
-curl "https://api.swapapi.xyz/health"
+curl "https://api.swapapi.dev/health"
 ```
 
 Expect: `{ "success": true, "data": { "status": "ok" } }`
@@ -203,7 +203,7 @@ Expect: `{ "success": true, "data": { "status": "ok" } }`
 ### Test 8: Simulate + estimate gas + submit (viem)
 
 ```ts
-const quote = await fetch(`https://api.swapapi.xyz/v1/swap/8453?...`).then(r => r.json())
+const quote = await fetch(`https://api.swapapi.dev/v1/swap/8453?...`).then(r => r.json())
 const { tx } = quote.data
 
 // Simulate — throws if the swap would revert
@@ -235,7 +235,7 @@ const hash = await walletClient.sendTransaction({
 
 ```ts
 // 1. Fetch quote to get router address
-const quote = await fetch(`https://api.swapapi.xyz/v1/swap/42161?tokenIn=0xaf88...&...`).then(r => r.json())
+const quote = await fetch(`https://api.swapapi.dev/v1/swap/42161?tokenIn=0xaf88...&...`).then(r => r.json())
 const router = quote.data.tx.to
 
 // 2. Check current allowance
@@ -258,7 +258,7 @@ if (allowance < amountIn) {
 }
 
 // 4. Re-fetch fresh quote (critical — old calldata has expired deadline)
-const freshQuote = await fetch(`https://api.swapapi.xyz/v1/swap/42161?tokenIn=0xaf88...&...`).then(r => r.json())
+const freshQuote = await fetch(`https://api.swapapi.dev/v1/swap/42161?tokenIn=0xaf88...&...`).then(r => r.json())
 // now simulate, estimate gas, and submit
 ```
 

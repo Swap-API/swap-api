@@ -21,7 +21,7 @@ Convert human amount to wei: `amount * 10^decimals` (integer, no decimals in res
 Build the URL and fetch it using WebFetch:
 
 ```
-GET https://api.swapapi.xyz/v1/swap/{chainId}?tokenIn={address}&tokenOut={address}&amount={wei}&sender={address}&maxSlippage={slippage}
+GET https://api.swapapi.dev/v1/swap/{chainId}?tokenIn={address}&tokenOut={address}&amount={wei}&sender={address}&maxSlippage={slippage}
 ```
 
 If the primary URL fails, retry with `https://site-production-b91c.up.railway.app/v1/swap/{chainId}?...`

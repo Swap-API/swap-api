@@ -3,7 +3,7 @@
 **Executable token swap calldata in one GET request.** No API keys. No accounts. No SDK bloat.
 
 ```
-https://api.swapapi.xyz
+https://api.swapapi.dev
 ```
 
 ---
@@ -13,7 +13,7 @@ https://api.swapapi.xyz
 Swap 1 ETH for USDC on Ethereum:
 
 ```bash
-curl "https://api.swapapi.xyz/v1/swap/1?\
+curl "https://api.swapapi.dev/v1/swap/1?\
 tokenIn=0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE&\
 tokenOut=0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48&\
 amount=1000000000000000000&\
@@ -102,7 +102,7 @@ That's it. The response contains everything you need to sign and broadcast.
 ### Base (ETH → USDC)
 
 ```bash
-curl "https://api.swapapi.xyz/v1/swap/8453?\
+curl "https://api.swapapi.dev/v1/swap/8453?\
 tokenIn=0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE&\
 tokenOut=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&\
 amount=500000000000000000&\
@@ -112,7 +112,7 @@ sender=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
 ### Arbitrum (USDC → ETH with 1% slippage)
 
 ```bash
-curl "https://api.swapapi.xyz/v1/swap/42161?\
+curl "https://api.swapapi.dev/v1/swap/42161?\
 tokenIn=0xaf88d065e77c8cC2239327C5EDb3A432268e5831&\
 tokenOut=0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE&\
 amount=1000000000&\
@@ -123,7 +123,7 @@ maxSlippage=0.01"
 ### Ethereum Mainnet (DAI → USDC)
 
 ```bash
-curl "https://api.swapapi.xyz/v1/swap/1?\
+curl "https://api.swapapi.dev/v1/swap/1?\
 tokenIn=0x6B175474E89094C44Da98b954EedeAC495271d0F&\
 tokenOut=0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48&\
 amount=1000000000000000000000&\
@@ -133,7 +133,7 @@ sender=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
 ### Polygon (MATIC → USDC)
 
 ```bash
-curl "https://api.swapapi.xyz/v1/swap/137?\
+curl "https://api.swapapi.dev/v1/swap/137?\
 tokenIn=0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE&\
 tokenOut=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&\
 amount=10000000000000000000&\
@@ -159,7 +159,7 @@ PRIVATE_KEY=0x...   # Your private key
 RPC_URL=https://mainnet.base.org
 
 # 2. Get swap quote
-RESPONSE=$(curl -s "https://api.swapapi.xyz/v1/swap/$CHAIN_ID?\
+RESPONSE=$(curl -s "https://api.swapapi.dev/v1/swap/$CHAIN_ID?\
 tokenIn=$TOKEN_IN&\
 tokenOut=$TOKEN_OUT&\
 amount=$AMOUNT&\
@@ -197,7 +197,7 @@ const client = createWalletClient({
 })
 
 const response = await fetch(
-  'https://api.swapapi.xyz/v1/swap/8453?' +
+  'https://api.swapapi.dev/v1/swap/8453?' +
   'tokenIn=0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE&' +
   'tokenOut=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&' +
   'amount=1000000000000000000&' +
