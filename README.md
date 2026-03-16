@@ -216,6 +216,31 @@ const hash = await client.sendTransaction({
 await client.waitForTransactionReceipt({ hash })
 ```
 
+## MCP Server
+
+For AI agents, Claude Desktop, Cursor, Cline, and other MCP clients:
+
+```bash
+npx @swapapi/mcp
+```
+
+Or add to Claude Desktop config:
+
+```json
+{
+  "mcpServers": {
+    "swapapi": {
+      "command": "npx",
+      "args": ["@swapapi/mcp"]
+    }
+  }
+}
+```
+
+See [mcp/README.md](./mcp/README.md) for full MCP documentation.
+
+---
+
 ## OpenAPI Spec
 
 See [openapi.json](./openapi.json) for the full OpenAPI specification.
