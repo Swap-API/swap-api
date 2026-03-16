@@ -1,0 +1,43 @@
+{
+  "name": "@swapapi/mcp",
+  "version": "0.0.1",
+  "description": "MCP server for SwapAPI - get executable token swap calldata for EVM chains",
+  "type": "module",
+  "main": "./mcp-server.ts",
+  "bin": {
+    "swapapi-mcp": "./mcp-server.ts"
+  },
+  "files": [
+    "mcp-server.ts",
+    "test.ts",
+    "README.md"
+  ],
+  "scripts": {
+    "start": "tsx mcp-server.ts",
+    "test": "tsx test.ts"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "swap",
+    "dex",
+    "ethereum",
+    "defi",
+    "tokens",
+    "blockchain"
+  ],
+  "author": "SwapAPI",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/swap-api/swap-api.git",
+    "directory": "mcp"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.27.1",
+    "zod": "4.3.6"
+  },
+  "devDependencies": {
+    "tsx": "4.21.0"
+  }
+}
