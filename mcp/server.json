@@ -1,0 +1,21 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.swap-api/mcp",
+  "description": "MCP server for SwapAPI - get executable token swap calldata for EVM chains",
+  "repository": {
+    "url": "https://MinoXBT@github.com/swap-api/swap-api",
+    "source": "github",
+    "subfolder": "mcp"
+  },
+  "version": "0.0.3",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "@swapapi/mcp",
+      "version": "0.0.3",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ]
+}
