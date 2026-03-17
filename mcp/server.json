@@ -3,16 +3,16 @@
   "name": "io.github.Swap-API/mcp",
   "description": "MCP server for SwapAPI - get executable token swap calldata for EVM chains",
   "repository": {
-    "url": "https://MinoXBT@github.com/swap-api/swap-api",
+    "url": "https://github.com/swap-api/swap-api",
     "source": "github",
     "subfolder": "mcp"
   },
-  "version": "0.0.4",
+  "version": "0.1.0",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "@swapapi/mcp",
-      "version": "0.0.4",
+      "version": "0.1.0",
       "transport": {
         "type": "stdio"
       }

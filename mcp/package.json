@@ -1,6 +1,6 @@
 {
   "name": "@swapapi/mcp",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "description": "MCP server for SwapAPI - get executable token swap calldata for EVM chains",
   "mcpName": "io.github.Swap-API/mcp",
   "type": "module",
